@@ -4,30 +4,49 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokemonapp.domain.entities.NamedAPIResource
+import com.example.pokemonapp.domain.entities.Pokemon
 import com.example.pokemonapp.domain.entities.Result
 import com.example.pokemonapp.domain.useCase.GetPokemonUseCase
 import kotlinx.coroutines.launch
 
 class ListPokemonViewModel(
     private val getPokemonUseCase: GetPokemonUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    private val _listPokemon = MutableLiveData<List<NamedAPIResource>>()
-    val listPokemon: LiveData<List<NamedAPIResource>> = _listPokemon
+    private companion object {
+        var OFFSET = 0
+        const val LIMIT = 30
+    }
+
+    private val _listPokemon = MutableLiveData<List<Pokemon>>()
+    val listPokemon: LiveData<List<Pokemon>> = _listPokemon
+
+    private val _listPokemonState = MutableLiveData<ListPokemonState>()
+    val listPokemonState: LiveData<ListPokemonState> = _listPokemonState
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun loadPokemon() {
+    init {
+        loadData(offset = OFFSET, limit = LIMIT)
+    }
+
+    fun loadMorePokemon() {
+        _listPokemonState.value = ListPokemonState.Loading(load = true)
+        OFFSET += 30
+        loadData(offset = OFFSET, limit = LIMIT)
+    }
+
+    private fun loadData(offset: Int, limit: Int) {
+        _listPokemonState.value = ListPokemonState.Loading(load = true)
         viewModelScope.launch {
-            val result = getPokemonUseCase.invoke(0,30)
+            val result = getPokemonUseCase.invoke(offset = offset, limit = limit)
             handleResult(result = result)
         }
     }
 
-    private fun handleResult(result: Result<List<NamedAPIResource>>) {
-        when(result) {
+    private fun handleResult(result: Result<List<Pokemon>>) {
+        when (result) {
             is Result.Success -> {
                 _listPokemon.value = result.data
             }

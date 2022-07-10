@@ -1,6 +1,6 @@
 package com.example.pokemonapp.domain.entities
 
-data class NamedAPIResource(
+data class Pokemon(
     val name: String,
     val url: String
 )
