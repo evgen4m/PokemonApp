@@ -25,11 +25,15 @@ class ListPokemonAdapter : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolde
     private var listPokemon = mutableListOf<Pokemon>()
         set(newValue) {
             field.addAll(newValue)
-            notifyItemInserted(field.lastIndex)
+            notifyDataSetChanged()
         }
 
     fun setList(list: List<Pokemon>) {
         listPokemon = list as MutableList<Pokemon>
+    }
+
+    fun clearList() {
+        listPokemon.clear()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

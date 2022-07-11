@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokemonapp.databinding.ActivityMainBinding
 import com.example.pokemonapp.domain.entities.Pokemon
 import com.example.pokemonapp.presentation.ListPokemonState
@@ -30,13 +31,18 @@ class ListPokemonActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.listPokemon.adapter = adapter
-        val layoutManager = GridLayoutManager(this, 3)
+        val layoutManager = LinearLayoutManager(this)
         binding.listPokemon.layoutManager = layoutManager
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                 viewModel.loadMorePokemon()
             }
         })
+
+        binding.updateListPokemon.setOnClickListener {
+            adapter.clearList()
+            viewModel.loadRandomPokemon()
+        }
     }
 
     private fun observeViewModel() {

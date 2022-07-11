@@ -21,6 +21,4 @@ class PokemonRepositoryImpl(
             Result.Error(error = e)
         }
     }
-
-
 }
