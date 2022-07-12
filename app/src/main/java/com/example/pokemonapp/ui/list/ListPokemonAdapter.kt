@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.pokemonapp.R
 import com.example.pokemonapp.databinding.PokemonListItemBinding
 import com.example.pokemonapp.domain.entities.Pokemon
+import com.example.pokemonapp.ui.extentions.sortBy
 
 class ListPokemonAdapter( val onItemClick: (Pokemon) -> Unit) : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolder>() {
 
@@ -34,6 +35,11 @@ class ListPokemonAdapter( val onItemClick: (Pokemon) -> Unit) : RecyclerView.Ada
 
     fun clearList() {
         listPokemon.clear()
+    }
+
+    fun sortList(sortParameter: String) {
+        listPokemon.sortBy(sortParameter = sortParameter)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

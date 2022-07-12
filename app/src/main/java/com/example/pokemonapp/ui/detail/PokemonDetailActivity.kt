@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.pokemonapp.R
 import com.example.pokemonapp.databinding.ActivityPokemonDetailBinding
 import com.example.pokemonapp.domain.entities.PokemonDetail
@@ -40,6 +41,11 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.pokemonDetail.observe(this, ::updateUiByPokemon)
+        viewModel.error.observe(this, ::showErrorMessage)
+    }
+
+    private fun showErrorMessage(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
     private fun updateUiByPokemon(pokemonDetail: PokemonDetail) {
@@ -48,20 +54,12 @@ class PokemonDetailActivity : AppCompatActivity() {
             getString(R.string.height, pokemonDetail.height.toString())
         binding.pokemonDetailWeight.text =
             getString(R.string.weight, pokemonDetail.weight.toString())
+        binding.pokemonDetailType.text = getString(R.string.type, pokemonDetail.type)
+        binding.pokemonDetailAttack.text =
+            getString(R.string.attack, pokemonDetail.attack.toString())
+        binding.pokemonDetailDefense.text =
+            getString(R.string.defense, pokemonDetail.defence.toString())
+        binding.pokemonDetailHP.text = getString(R.string.hp, pokemonDetail.hp.toString())
 
-        pokemonDetail.types.forEach { types ->
-            binding.pokemonDetailType.text = getString(R.string.type, types.type.name)
-        }
-
-        pokemonDetail.stats.forEach { stats ->
-            when (stats.stat.name) {
-                getString(R.string.text_attack) -> binding.pokemonDetailAttack.text =
-                    getString(R.string.attack, stats.base_stat.toString())
-                getString(R.string.text_defense) -> binding.pokemonDetailDefense.text =
-                    getString(R.string.defense, stats.base_stat.toString())
-                getString(R.string.text_hp) -> binding.pokemonDetailHP.text =
-                    getString(R.string.hp, stats.base_stat.toString())
-            }
-        }
     }
 }

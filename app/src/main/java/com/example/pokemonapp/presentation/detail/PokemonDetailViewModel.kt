@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokemonapp.data.dataSource.remote.model.PokemonDetailDto
 import com.example.pokemonapp.domain.entities.PokemonDetail
 import com.example.pokemonapp.domain.entities.Result
 import com.example.pokemonapp.domain.useCase.GetPokemonDetailByNameUseCase

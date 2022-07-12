@@ -1,6 +1,9 @@
 package com.example.pokemonapp.data.repository
 
+import com.example.pokemonapp.data.converter.convertToDomain
 import com.example.pokemonapp.data.dataSource.remote.PokemonDataSource
+import com.example.pokemonapp.data.dataSource.remote.model.PokemonDetailDto
+import com.example.pokemonapp.data.dataSource.remote.model.PokemonDto
 import com.example.pokemonapp.domain.entities.Pokemon
 import com.example.pokemonapp.domain.entities.PokemonDetail
 import com.example.pokemonapp.domain.entities.Result
@@ -15,8 +18,20 @@ class PokemonRepositoryImpl(
 
     override suspend fun fetchAll(offset: Int, limit: Int): Result<List<Pokemon>> = withContext(ioDispatcher) {
         return@withContext try {
-            val result = pokemonDataSource.fetchNamedAPIResourceList(offset = offset, limit = limit).results
-            Result.Success(data = result)
+            val list = arrayListOf<Pokemon>()
+            val resultList = async { pokemonDataSource.fetchNamedAPIResourceList(offset = offset, limit = limit) }
+            resultList.await().results.forEach { pokemon ->
+                val resultDetail = pokemonDataSource.fetchPokemonDetailsByName(name = pokemon.name)
+                list.add(
+                    PokemonDto(
+                        name = pokemon.name,
+                        url = pokemon.url,
+                        pokemonDetailDto = resultDetail
+                    ).convertToDomain()
+                )
+                println(list)
+            }
+            Result.Success(data = list)
         }catch (e: Exception) {
             e.printStackTrace()
             Result.Error(error = e)
@@ -26,7 +41,7 @@ class PokemonRepositoryImpl(
     override suspend fun fetchPokemon(name: String): Result<PokemonDetail> = withContext(ioDispatcher) {
         return@withContext try {
             val result = pokemonDataSource.fetchPokemonDetailsByName(name = name)
-            Result.Success(data = result)
+            Result.Success(data = result.convertToDomain())
         }catch (e: Exception) {
             e.printStackTrace()
             Result.Error(error = e)

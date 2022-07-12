@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">PokemonApp</string>
-    <string name="attack">Атака: %1$s</string>
+    <string name="attack">Attack: %1$s</string>
     <string name="hp">HP: %1$s</string>
     <string name="defense">Defense: %1$s</string>
     <string name="name">Name: %1$s</string>

@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pokemonapp.R
 import com.example.pokemonapp.databinding.ActivityMainBinding
 import com.example.pokemonapp.domain.entities.Pokemon
 import com.example.pokemonapp.presentation.list.ListPokemonState
 import com.example.pokemonapp.presentation.list.ListPokemonViewModel
 import com.example.pokemonapp.ui.detail.PokemonDetailActivity
+import com.example.pokemonapp.ui.extentions.sortBy
+import okhttp3.internal.notify
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListPokemonActivity : AppCompatActivity() {
@@ -29,6 +32,7 @@ class ListPokemonActivity : AppCompatActivity() {
         setContentView(binding.root)
         observeViewModel()
         initViews()
+
     }
 
     private fun initViews() {
@@ -45,6 +49,24 @@ class ListPokemonActivity : AppCompatActivity() {
             adapter.clearList()
             viewModel.loadRandomPokemon()
         }
+
+        binding.sortAttack.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                adapter.sortList(sortParameter = getString(R.string.text_attack))
+            }
+        }
+
+        binding.sortDefense.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                adapter.sortList(sortParameter = getString(R.string.text_defense))
+            }
+        }
+
+        binding.sortHp.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                adapter.sortList(sortParameter = getString(R.string.text_hp))
+            }
+        }
     }
 
     private fun observeViewModel() {
@@ -54,7 +76,7 @@ class ListPokemonActivity : AppCompatActivity() {
     }
 
     private fun showLoading(listPokemonState: ListPokemonState) {
-        when (listPokemonState) {
+        when(listPokemonState) {
             is ListPokemonState.Loading -> {
                 showProgressBar(load = listPokemonState.load)
             }
