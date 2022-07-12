@@ -15,7 +15,6 @@ class ListPokemonViewModel(
 
     private companion object {
         var OFFSET = 0
-        const val LIMIT = 30
         const val MAX_LIMIT = 777
     }
 
@@ -29,24 +28,24 @@ class ListPokemonViewModel(
     val error: LiveData<String> = _error
 
     init {
-        loadData(offset = OFFSET, limit = LIMIT)
+        loadData(offset = OFFSET)
     }
 
     fun loadMorePokemon() {
         _listPokemonState.value = ListPokemonState.Loading(load = true)
         OFFSET += 30
-        loadData(offset = OFFSET, limit = LIMIT)
+        loadData(offset = OFFSET)
     }
 
     fun loadRandomPokemon() {
         val randomOffset = (0..MAX_LIMIT).random()
-        loadData(offset = randomOffset, limit = LIMIT)
+        loadData(offset = randomOffset)
     }
 
-    private fun loadData(offset: Int, limit: Int) {
+    private fun loadData(offset: Int) {
         _listPokemonState.value = ListPokemonState.Loading(load = true)
         viewModelScope.launch {
-            val result = getPokemonUseCase.invoke(offset = offset, limit = limit)
+            val result = getPokemonUseCase.invoke(offset = offset)
             handleResult(result = result)
         }
     }

@@ -6,7 +6,7 @@ import com.example.pokemonapp.domain.entities.Result
 
 interface PokemonRepository {
 
-    suspend fun fetchAll(offset: Int, limit: Int) : Result<List<Pokemon>>
+    suspend fun fetchAll(offset: Int) : Result<List<Pokemon>>
 
     suspend fun fetchPokemon(name: String) : Result<PokemonDetail>
 

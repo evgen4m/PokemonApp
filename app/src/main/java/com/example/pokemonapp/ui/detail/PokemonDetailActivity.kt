@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.pokemonapp.R
 import com.example.pokemonapp.databinding.ActivityPokemonDetailBinding
@@ -34,6 +36,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         intent.getStringExtra(EXTRA_NAME)?.let { name -> viewModel.fetchPokemon(name = name) }
 
         observeViewModel()
@@ -46,6 +49,15 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private fun showErrorMessage(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun updateUiByPokemon(pokemonDetail: PokemonDetail) {

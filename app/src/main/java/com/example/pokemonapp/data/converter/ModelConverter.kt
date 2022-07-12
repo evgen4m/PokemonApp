@@ -5,13 +5,10 @@ import com.example.pokemonapp.data.dataSource.remote.model.PokemonDto
 import com.example.pokemonapp.domain.entities.Pokemon
 import com.example.pokemonapp.domain.entities.PokemonDetail
 
-
 fun PokemonDto.convertToDomain() : Pokemon {
     return Pokemon(
         name = this.name,
         url = this.url,
-        weight = this.pokemonDetailDto.weight,
-        height = this.pokemonDetailDto.height,
         hp = this.pokemonDetailDto.stats[0].base_stat,
         attack = this.pokemonDetailDto.stats[1].base_stat,
         defence = this.pokemonDetailDto.stats[2].base_stat,

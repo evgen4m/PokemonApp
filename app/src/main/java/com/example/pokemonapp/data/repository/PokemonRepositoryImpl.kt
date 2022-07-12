@@ -16,10 +16,16 @@ class PokemonRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : PokemonRepository {
 
-    override suspend fun fetchAll(offset: Int, limit: Int): Result<List<Pokemon>> = withContext(ioDispatcher) {
+    private companion object {
+
+        const val ITEM_LIMIT = 30
+
+    }
+
+    override suspend fun fetchAll(offset: Int): Result<List<Pokemon>> = withContext(ioDispatcher) {
         return@withContext try {
             val list = arrayListOf<Pokemon>()
-            val resultList = async { pokemonDataSource.fetchNamedAPIResourceList(offset = offset, limit = limit) }
+            val resultList = async { pokemonDataSource.fetchNamedAPIResourceList(offset = offset, limit = ITEM_LIMIT) }
             resultList.await().results.forEach { pokemon ->
                 val resultDetail = pokemonDataSource.fetchPokemonDetailsByName(name = pokemon.name)
                 list.add(

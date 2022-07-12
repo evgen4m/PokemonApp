@@ -1,6 +1,8 @@
 package com.example.pokemonapp.ui.list
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -49,24 +51,6 @@ class ListPokemonActivity : AppCompatActivity() {
             adapter.clearList()
             viewModel.loadRandomPokemon()
         }
-
-        binding.sortAttack.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                adapter.sortList(sortParameter = getString(R.string.text_attack))
-            }
-        }
-
-        binding.sortDefense.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                adapter.sortList(sortParameter = getString(R.string.text_defense))
-            }
-        }
-
-        binding.sortHp.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                adapter.sortList(sortParameter = getString(R.string.text_hp))
-            }
-        }
     }
 
     private fun observeViewModel() {
@@ -97,5 +81,19 @@ class ListPokemonActivity : AppCompatActivity() {
 
     private fun openDetailScreen(name: String) {
         PokemonDetailActivity.start(this, name = name)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sort_main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.sortByAttack -> { adapter.sortList(sortParameter = getString(R.string.text_attack)) }
+            R.id.sortByDefence -> { adapter.sortList(sortParameter = getString(R.string.text_defense)) }
+            R.id.sortByHp -> { adapter.sortList(sortParameter = getString(R.string.text_hp)) }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

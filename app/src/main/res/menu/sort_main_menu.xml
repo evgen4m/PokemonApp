@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sortByAttack"
+        android:title="sortByAttack"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/sortByDefence"
+        android:title="sortByDefence"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/sortByHp"
+        android:title="sortByHp"
+        app:showAsAction="never"/>
+
+</menu>

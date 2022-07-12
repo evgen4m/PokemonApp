@@ -6,6 +6,4 @@ data class Pokemon(
     val attack: Int,
     val defence: Int,
     val hp: Int,
-    val height: Int,
-    val weight: Int
 )
