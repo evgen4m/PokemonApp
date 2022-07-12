@@ -1,4 +1,4 @@
-package com.example.pokemonapp.presentation
+package com.example.pokemonapp.presentation.list
 
 sealed class ListPokemonState {
 

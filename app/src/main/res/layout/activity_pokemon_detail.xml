@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.detail.PokemonDetailActivity">
+
+    <TextView
+        android:id="@+id/pokemonDetailName"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Пикачу" />
+
+    <TextView
+        android:id="@+id/pokemonDetailHeight"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Рост" />
+
+    <TextView
+        android:id="@+id/pokemonDetailType"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Род покемона" />
+
+    <TextView
+        android:id="@+id/pokemonDetailWeight"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Вес" />
+
+    <TextView
+        android:id="@+id/pokemonDetailAttack"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Атака" />
+
+    <TextView
+        android:id="@+id/pokemonDetailDefense"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Защита" />
+
+    <TextView
+        android:id="@+id/pokemonDetailHP"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Жизни" />
+
+</LinearLayout>

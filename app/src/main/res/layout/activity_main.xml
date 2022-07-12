@@ -3,19 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ListPokemonActivity">
+    tools:context=".ui.list.ListPokemonActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listPokemon"
+      <!--  <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <CheckBox
+                android:id="@+id/sortAttack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attack"/>
+            <CheckBox
+                android:id="@+id/sortDefense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/defense"/>
+            <CheckBox
+                android:id="@+id/sortHp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hp"/>
+
+        </LinearLayout>-->
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-    </androidx.core.widget.NestedScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listPokemon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/pbProgress"

@@ -1,4 +1,4 @@
-package com.example.pokemonapp.ui
+package com.example.pokemonapp.ui.list
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.example.pokemonapp.R
 import com.example.pokemonapp.databinding.PokemonListItemBinding
 import com.example.pokemonapp.domain.entities.Pokemon
 
-class ListPokemonAdapter : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolder>() {
+class ListPokemonAdapter( val onItemClick: (Pokemon) -> Unit) : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolder>() {
 
     private companion object {
 
@@ -39,7 +39,7 @@ class ListPokemonAdapter : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolde
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         context = parent.context
         val view = LayoutInflater.from(context).inflate(R.layout.pokemon_list_item, parent, false)
-        return ListViewHolder(view = view)
+        return ListViewHolder(onItemClick = onItemClick, view = view)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -51,7 +51,6 @@ class ListPokemonAdapter : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolde
 
         Glide.with(context!!)
             .load("$IMAGE_URL$number.png")
-            .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.listItemBinding.pokemonImage)
     }
@@ -59,10 +58,12 @@ class ListPokemonAdapter : RecyclerView.Adapter<ListPokemonAdapter.ListViewHolde
     override fun getItemCount(): Int =
         listPokemon.size
 
-    inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ListViewHolder(val onItemClick: (Pokemon) -> Unit, view: View) : RecyclerView.ViewHolder(view) {
         val listItemBinding = PokemonListItemBinding.bind(view)
         fun bind(pokemon: Pokemon) {
             listItemBinding.pokemonName.text = pokemon.name
+
+            itemView.setOnClickListener { onItemClick(pokemon) }
         }
     }
 }

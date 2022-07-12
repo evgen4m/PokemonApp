@@ -1,16 +1,16 @@
-package com.example.pokemonapp.ui
+package com.example.pokemonapp.ui.list
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokemonapp.databinding.ActivityMainBinding
 import com.example.pokemonapp.domain.entities.Pokemon
-import com.example.pokemonapp.presentation.ListPokemonState
-import com.example.pokemonapp.presentation.ListPokemonViewModel
+import com.example.pokemonapp.presentation.list.ListPokemonState
+import com.example.pokemonapp.presentation.list.ListPokemonViewModel
+import com.example.pokemonapp.ui.detail.PokemonDetailActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListPokemonActivity : AppCompatActivity() {
@@ -19,7 +19,9 @@ class ListPokemonActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private var adapter = ListPokemonAdapter()
+    private var adapter = ListPokemonAdapter { pokemon ->
+        openDetailScreen(name = pokemon.name)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,7 @@ class ListPokemonActivity : AppCompatActivity() {
     }
 
     private fun showLoading(listPokemonState: ListPokemonState) {
-        when(listPokemonState) {
+        when (listPokemonState) {
             is ListPokemonState.Loading -> {
                 showProgressBar(load = listPokemonState.load)
             }
@@ -69,5 +71,9 @@ class ListPokemonActivity : AppCompatActivity() {
 
     private fun setListPokemon(list: List<Pokemon>) {
         adapter.setList(list = list)
+    }
+
+    private fun openDetailScreen(name: String) {
+        PokemonDetailActivity.start(this, name = name)
     }
 }
